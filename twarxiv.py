@@ -78,7 +78,7 @@ def get_arxiv_ids(tweet):
     text = tweet["text"]
     urls = tweet.get("entities", {}).get("urls", [])
     ids = (
-        arxiv_regex.findall(text) +
+        list(map(_match_to_id, arxiv_regex.findall(text))) +
         [_match_to_id(i) for url in urls
          for i in arxiv_regex.findall(url.get("expanded_url", ""))]
     )
